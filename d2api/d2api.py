@@ -11,7 +11,7 @@ from aiocache import cached
 from .d2scrape import BASE_URL, ITEM_URLS
 from .d2const import properties, color_code
 
-class D2Scraper(commands.Cog):
+class D2Database(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.session = aiohttp.ClientSession()

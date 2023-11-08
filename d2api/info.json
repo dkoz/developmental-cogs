@@ -1,10 +1,11 @@
 {
     "author": ["Kozejin"],
-    "install_msg": "Installed Diablo 2 Item API",
+    "install_msg": "Installed Diablo 2 Item API.\nType `[p]help D2Database` to get started.",
     "name": "d2api",
     "short": "Search for any item in Diablo 2",
     "description": "Search for any item in Diablo 2.",
     "tags": ["utilities", "diablo", "api", "games"],
+    "required": ["aiohttp", "bs4", "aiocache", "random"],
     "hidden": false,
     "min_bot_version": "3.5.0",
     "end_user_data_statement": "This cog does not persistently store user data."

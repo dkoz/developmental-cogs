@@ -1,0 +1,11 @@
+{
+    "author": ["Kozejin"],
+    "install_msg": "Installed FFXIV Lodestone!\nType `[p]help Lodestone` to get started!",
+    "name": "FFXIV",
+    "short": "Retrieve information from FFXIV Lodestone.",
+    "description": "Retrieve character and free company information from the FFXIV Lodestone.",
+    "tags": ["ffxiv", "lodestone", "xivapi"],
+    "requirements": ["aiohttp", "asyncio"],
+    "hidden": false,
+    "min_bot_version": "3.5.0"
+  }
