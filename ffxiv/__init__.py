@@ -1,4 +1,4 @@
-from .ffxiv import FFXIVLodestone
+from .ffxiv import Lodestone
 
 async def setup(bot):
-    await bot.add_cog(FFXIVLodestone(bot))
+    await bot.add_cog(Lodestone(bot))

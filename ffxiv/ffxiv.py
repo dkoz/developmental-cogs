@@ -3,7 +3,7 @@ from redbot.core import commands, Config, checks
 import aiohttp
 import asyncio
 
-class FFXIVLodestone(commands.Cog):
+class Lodestone(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.base_url = "https://xivapi.com"
