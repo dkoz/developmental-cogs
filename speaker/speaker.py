@@ -15,12 +15,27 @@ class Speaker(commands.Cog):
     @speak_group.command(name="say")
     async def speak_say(self, ctx, destination: discord.TextChannel, *, content):
         """Speak as the bot."""
-        await ctx.message.delete()
-        await destination.send(content=content)
+        if not ctx.channel.permissions_for(ctx.guild.me).manage_messages:
+            await ctx.send("I do not have permission to delete messages in this channel.")
+            return
+
+        if not destination.permissions_for(ctx.guild.me).send_messages:
+            await ctx.send(f"I do not have permission to send messages in {destination.mention}.")
+            return
+
+        try:
+            await ctx.message.delete()
+            await destination.send(content=content)
+        except Forbidden:
+            await ctx.send("I'm missing permissions to complete this action.")
 
     @speak_group.command(name="embed")
     async def speak_embed(self, ctx, destination: discord.TextChannel):
         """Create an embedded message as the bot."""
+        if not ctx.channel.permissions_for(ctx.guild.me).manage_messages:
+            await ctx.send("I do not have permission to delete messages in this channel.")
+            return
+        
         await ctx.message.delete()
         await ctx.send("Please enter the title for the embedded message:")
         try:
