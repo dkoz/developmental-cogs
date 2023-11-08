@@ -7,8 +7,11 @@ class FFXIVLodestone(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.base_url = "https://xivapi.com"
-        self.api_key = ""
         self.config = Config.get_conf(self, identifier=9087263451)
+        default_global = {
+            "api_key": None
+        }
+        self.config.register_global(**default_global)
         default_user = {
             "server": None,
             "character_name": None
@@ -16,10 +19,22 @@ class FFXIVLodestone(commands.Cog):
         self.config.register_user(**default_user)
 
     @commands.command()
+    @commands.is_owner()
+    async def setapikey(self, ctx, *, key: str):
+        """Set the API key for the FFXIV Lodestone."""
+        await self.config.api_key.set(key)
+        await ctx.send("API key set successfully.")
+
+    async def get_api_key(self):
+        """Retrieve the API key from the config."""
+        return await self.config.api_key()
+
+    @commands.command()
     @commands.cooldown(1, 3, commands.BucketType.default)
     async def char(self, ctx, server_name: str, *, character_name: str):
         """Search for a character in the FFXIV database based on server and character name."""
-        url = f"{self.base_url}/character/search?name={character_name}&server={server_name}&private_key={self.api_key}"
+        api_key = await self.get_api_key()
+        url = f"{self.base_url}/character/search?name={character_name}&server={server_name}&private_key={api_key}"
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 data = await response.json()
@@ -28,7 +43,7 @@ class FFXIVLodestone(commands.Cog):
             character = data['Results'][0]
             character_id = character['ID']
 
-            detailed_url = f"{self.base_url}/character/{character_id}?extended=1&private_key={self.api_key}"
+            detailed_url = f"{self.base_url}/character/{character_id}?extended=1&private_key={api_key}"
             async with aiohttp.ClientSession() as session:
                 async with session.get(detailed_url) as detailed_response:
                     detailed_data = await detailed_response.json()
@@ -67,7 +82,8 @@ class FFXIVLodestone(commands.Cog):
     @commands.cooldown(1, 3, commands.BucketType.default)
     async def csearch(self, ctx, server_name: str, *, fc_name: str):
         """Search for a Free Company in the FFXIV database based on server and FC name."""
-        url = f"{self.base_url}/freecompany/search?name={fc_name}&server={server_name}&private_key={self.api_key}"
+        api_key = await self.get_api_key()
+        url = f"{self.base_url}/freecompany/search?name={fc_name}&server={server_name}&private_key={api_key}"
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 data = await response.json()
@@ -76,7 +92,7 @@ class FFXIVLodestone(commands.Cog):
             fc = data['Results'][0]
             fc_id = fc['ID']
 
-            detailed_url = f"{self.base_url}/freecompany/{fc_id}?extended=1&private_key={self.api_key}"
+            detailed_url = f"{self.base_url}/freecompany/{fc_id}?extended=1&private_key={api_key}"
             async with aiohttp.ClientSession() as session:
                 async with session.get(detailed_url) as detailed_response:
                     detailed_data = await detailed_response.json()
