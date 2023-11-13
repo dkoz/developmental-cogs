@@ -96,7 +96,7 @@ class BattleMetricsCog(commands.Cog):
     @commands.command()
     @commands.guild_only()
     @commands.is_owner()
-    async def rcon_command(self, ctx, server_id: str, *, command: str):
+    async def rcon(self, ctx, server_id: str, *, command: str):
         """Sends an RCON command to the specified server."""
         bmapi = battlemetrics
 
@@ -116,6 +116,36 @@ class BattleMetricsCog(commands.Cog):
         else:
             result_message = f"Successfully ran the command!\n**RESULTS**\n{response['data']['attributes']['result']}"
             await ctx.send(result_message)
+
+    @commands.command()
+    @commands.guild_only()
+    @commands.is_owner()
+    async def banlist(self, ctx, battlemetrics_server_id: str):
+        """Fetches and displays the ban list for the specified server."""
+        servers = await self.config.guild(ctx.guild).servers()
+        server_config = next((s for s in servers if s['battlemetrics_server_id'] == battlemetrics_server_id), None)
+
+        if server_config is None:
+            await ctx.send("Server configuration not found.")
+            return
+
+        try:
+            bmapi = battlemetrics
+            await bmapi.setup(server_config['bearer_token'])
+            response = await bmapi.ban_list(battlemetrics_server_id)
+
+            if 'data' in response:
+                ban_list = response['data']
+                response_message = "Ban List:\n"
+                for ban in ban_list:
+                    reason = ban['attributes'].get('reason', 'No reason provided')
+                    response_message += f"- {reason}\n"
+
+                await ctx.send(response_message)
+            else:
+                await ctx.send("No ban list data found.")
+        except Exception as e:
+            await ctx.send(f"Error fetching ban list: {e}")
             
     @commands.command()
     @commands.guild_only()
