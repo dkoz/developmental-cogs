@@ -99,7 +99,15 @@ class BattleMetricsCog(commands.Cog):
     async def rcon_command(self, ctx, server_id: str, *, command: str):
         """Sends an RCON command to the specified server."""
         bmapi = battlemetrics
-        await bmapi.setup(BEARER_TOKEN)
+
+        servers = await self.config.guild(ctx.guild).servers()
+        server_config = next((s for s in servers if s['battlemetrics_server_id'] == server_id), None)
+
+        if server_config is None:
+            await ctx.send("Server configuration not found.")
+            return
+
+        await bmapi.setup(server_config['bearer_token'])
         response = await bmapi.server_send_console_command(server_id=server_id, command=command)
 
         if 'errors' in response:
