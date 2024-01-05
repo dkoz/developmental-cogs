@@ -39,7 +39,7 @@ class Lodestone(commands.Cog):
             async with session.get(url) as response:
                 data = await response.json()
 
-        if data['Results']:
+        if 'Results' in data and data['Results']:
             character = data['Results'][0]
             character_id = character['ID']
 
@@ -88,7 +88,7 @@ class Lodestone(commands.Cog):
             async with session.get(url) as response:
                 data = await response.json()
 
-        if data['Results']:
+        if 'Results' in data and data['Results']:
             fc = data['Results'][0]
             fc_id = fc['ID']
 

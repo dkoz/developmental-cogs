@@ -59,7 +59,6 @@ ITEM_URLS = [
     f"{BASE_URL}/diablo2exp/items/normal/uspears.shtml",
     f"{BASE_URL}/diablo2exp/items/normal/ustaves.shtml",
     f"{BASE_URL}/diablo2exp/items/normal/uswords.shtml",
-    f"{BASE_URL}/diablo2exp/items/normal/uthrowing.shtml",
     f"{BASE_URL}/diablo2exp/items/normal/uwands.shtml",
     f"{BASE_URL}/diablo2exp/items/normal/usorceress.shtml",
     f"{BASE_URL}/diablo2exp/items/normal/udruid.shtml",
@@ -67,5 +66,10 @@ ITEM_URLS = [
     f"{BASE_URL}/diablo2exp/items/normal/ubarbarian.shtml",
     f"{BASE_URL}/diablo2exp/items/normal/unecromancer.shtml",
     f"{BASE_URL}/diablo2exp/items/normal/uassassin.shtml",
-    f"{BASE_URL}/diablo2exp/items/normal/uamazon.shtml"
+    f"{BASE_URL}/diablo2exp/items/normal/uamazon.shtml",
+    f"{BASE_URL}/diablo2exp/items/normal/urings.shtml",
+    f"{BASE_URL}/diablo2exp/items/normal/uamulets.shtml",
+    f"{BASE_URL}/diablo2exp/items/normal/ucharms.shtml",
+    f"{BASE_URL}/diablo2exp/items/normal/ujewels.shtml",
+    f"{BASE_URL}/diablo2exp/items/normal/ucirclets.shtml"
 ]
